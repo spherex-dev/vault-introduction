@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+#run this command as ./run-prod.sh <up|down> to start or shutdown the container
+docker-compose -f docker-compose-prod.yml $1

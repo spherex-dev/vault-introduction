@@ -1,0 +1,27 @@
+version: "3.6"
+services:
+  vault:
+    image: vault:latest
+    ports:
+      - 8200:8200
+    volumes:
+       - type: bind
+         source: ./config
+         target: /vault/config
+       - type: bind
+         source: ./scripts/unseal.sh
+         target: /usr/local/bin/unseal.sh
+       - type: bind
+         source: ./scripts/docker-entrypoint.sh
+         target: /usr/local/bin/docker-entrypoint.sh
+       - type: volume
+         source: vault_data
+         target: /vault/data
+    cap_add:
+      - IPC_LOCK
+    command:
+      - server
+    restart: unless-stopped
+
+volumes:
+  vault_data:
